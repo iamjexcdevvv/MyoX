@@ -1,3 +1,4 @@
+using MyoX.API.Middlewares;
 using MyoX.Application;
 using MyoX.Infrastructure;
 
@@ -9,6 +10,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Middlewares
+builder.Services.AddAuthenticationMiddleware(builder.Configuration);
 
 // Layers
 builder.Services.AddApplication();
@@ -24,6 +28,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

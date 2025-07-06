@@ -18,10 +18,16 @@ namespace MyoX.Infrastructure.Repository
             _context = context;
         }
 
-        public async Task CreateUserAsync(UserEntity user) =>
+        public async Task CreateUserAsync(UserEntity user)
+        {
             await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task<UserEntity?> GetUserByEmailAsync(string email) =>
             await _context.Users.FirstOrDefaultAsync(o => o.Email == email);
+
+        public async Task<bool> IsUserFoundAsync(string email) =>
+            await _context.Users.AnyAsync(o => o.Email == email);
     }
 }
