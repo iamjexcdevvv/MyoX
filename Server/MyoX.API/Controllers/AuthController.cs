@@ -26,12 +26,12 @@ namespace MyoX.API.Controllers
             var command = new LoginCommand(request);
             var result = await _loginHandler.Handle(command);
 
-            if (result.IsFailure)
+            if (!result.IsSuccess)
             {
                 return BadRequest(result.Error);
             }
 
-            return Ok(result.Value);
+            return Ok(result);
         }
 
         [HttpPost("register")]
@@ -40,12 +40,7 @@ namespace MyoX.API.Controllers
             var command = new RegisterCommand(request);
             var result = await _registerHandler.Handle(command);
 
-            if (result.IsFailure)
-            {
-                return BadRequest(result.Error);
-            }
-
-            return Ok();
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
     }
 }

@@ -1,0 +1,165 @@
+@let emailControl = registerForm.controls.email;
+@let emailError = getError(emailControl);
+
+@let passwordControl = registerForm.controls.password;
+@let passwordError = getError(passwordControl);
+
+@let confirmPasswordError = getError(registerForm);
+
+<div class="w-full h-full flex items-center justify-center">
+	<div class="bg-base-300 w-96 h-80 rounded-sm p-4">
+		<form
+            (ngSubmit)="onSubmit()"
+			[formGroup]="registerForm"
+			class="h-full w-full flex flex-col justify-between"
+		>
+			<div class="space-y-3">
+				<div>
+					<label class="w-full input">
+						<svg
+							class="h-[1em] opacity-50"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+						>
+							<g
+								stroke-linejoin="round"
+								stroke-linecap="round"
+								stroke-width="2.5"
+								fill="none"
+								stroke="currentColor"
+							>
+								<rect
+									width="20"
+									height="16"
+									x="2"
+									y="4"
+									rx="2"
+								></rect>
+								<path
+									d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"
+								></path>
+							</g>
+						</svg>
+						<input
+							type="email"
+							placeholder="mail@site.com"
+							formControlName="email"
+							required
+						/>
+					</label>
+
+					@if (emailControl.invalid && (emailControl.dirty || emailControl.touched) && emailError) 
+                    {
+                        <span class="text-sm text-error">{{emailError}}</span>
+                    }
+				</div>
+
+				<div>
+					<label class="w-full input">
+						<svg
+							class="h-[1em] opacity-50"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+						>
+							<g
+								stroke-linejoin="round"
+								stroke-linecap="round"
+								stroke-width="2.5"
+								fill="none"
+								stroke="currentColor"
+							>
+								<path
+									d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"
+								></path>
+								<circle
+									cx="16.5"
+									cy="7.5"
+									r=".5"
+									fill="currentColor"
+								></circle>
+							</g>
+						</svg>
+						<input
+							type="password"
+							required
+							placeholder="Password"
+							formControlName="password"
+						/>
+					</label>
+
+					@if (passwordControl.invalid && (passwordControl.dirty || passwordControl.touched) && passwordError) 
+                    { 
+                        <span class="text-sm text-error">{{passwordError}}</span>
+                    }
+				</div>
+
+				<div>
+					<label class="w-full input">
+						<svg
+							class="h-[1em] opacity-50"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+						>
+							<g
+								stroke-linejoin="round"
+								stroke-linecap="round"
+								stroke-width="2.5"
+								fill="none"
+								stroke="currentColor"
+							>
+								<path
+									d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"
+								></path>
+								<circle
+									cx="16.5"
+									cy="7.5"
+									r=".5"
+									fill="currentColor"
+								></circle>
+							</g>
+						</svg>
+						<input
+							type="password"
+							required
+							placeholder="Confirm Password"
+							formControlName="confirmPassword"
+						/>
+					</label>
+
+                    @if (registerForm.invalid && (registerForm.dirty ||
+					registerForm.touched) && confirmPasswordError) 
+                    {
+                        <span class="text-sm text-error">{{confirmPasswordError}}</span>
+                    }
+				</div>
+
+				<div>
+					<label class="label text-sm">
+						<input formControlName="userAgreeWithRegulations" type="checkbox" class="checkbox" />
+						I agree to the
+						<span class="text-primary">Terms and Policies</span> of
+						Myo X
+					</label>
+				</div>
+			</div>
+
+			<div class="space-y-2">
+				<div>
+					<button
+						[disabled]="registerForm.invalid"
+						class="btn w-full btn-outline btn-primary"
+					>
+						Sign Up
+					</button>
+				</div>
+
+				<div>
+					<p class="text-sm">
+						Already have account?
+						<span class="text-primary">Sign In here</span>
+					</p>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

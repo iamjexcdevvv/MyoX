@@ -8,7 +8,7 @@ namespace MyoX.Domain.Common
 {
     public class Result
     {
-        protected Result(bool isSuccess, Error error)
+        protected Result(bool isSuccess, Error? error)
         {
             if (isSuccess && error != Error.None ||
                 !isSuccess && error == Error.None)
@@ -22,9 +22,7 @@ namespace MyoX.Domain.Common
 
         public bool IsSuccess { get; }
 
-        public bool IsFailure => !IsSuccess;
-
-        public Error Error { get; }
+        public Error? Error { get; }
 
         public static Result Success() => new(true, Error.None);
 
@@ -35,7 +33,7 @@ namespace MyoX.Domain.Common
     {
         private readonly T? _value;
 
-        private Result(T? value, bool isSuccess, Error error)
+        private Result(T? value, bool isSuccess, Error? error)
             : base(isSuccess, error)
         {
             _value = value;
