@@ -10,5 +10,7 @@ namespace MyoX.Domain.Errors
     public static class UserAuthError
     {
         public static Error EmailAlreadyExists => new("UserAuthError.EmailAlreadyExists", "Email already exists");
+        public static Error UserNotFound => new("UserAuthError.UserNotFound", "Invalid email");
+        public static Error IncorrectPassword => new("UserAuthError.IncorrectPassword", "Invalid password");
     }
 }

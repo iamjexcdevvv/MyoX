@@ -11,5 +11,6 @@ namespace MyoX.Domain.Interfaces
     {
         Task<UserEntity?> GetUserByEmailAsync(string email);
         Task CreateUserAsync(UserEntity user);
+        Task<bool> IsUserFoundAsync(string email);
     }
 }

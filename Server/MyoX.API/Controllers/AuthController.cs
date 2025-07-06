@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyoX.Application.Abstraction.Command;
 using MyoX.Application.DTO;
+using MyoX.Application.Features.Authentication.Login;
 using MyoX.Application.Features.Authentication.Register;
 
 namespace MyoX.API.Controllers
@@ -11,19 +13,29 @@ namespace MyoX.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly ICommandHandler<RegisterCommand> _registerHandler;
-        public AuthController(ICommandHandler<RegisterCommand> registerHandler)
+        private readonly ICommandHandler<LoginCommand, AuthTokenDTO> _loginHandler;
+        public AuthController(ICommandHandler<RegisterCommand> registerHandler, ICommandHandler<LoginCommand, AuthTokenDTO> loginHandler)
         {
             _registerHandler = registerHandler;
+            _loginHandler = loginHandler;
         }
 
         [HttpPost("login")]
-        public IActionResult Login()
+        public async Task<IActionResult> Login(LoginDTO request)
         {
-            return Ok();
+            var command = new LoginCommand(request);
+            var result = await _loginHandler.Handle(command);
+
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
+
+            return Ok(result.Value);
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterDTO request)
+        public async Task<IActionResult> Register(RegisterDTO request)
         {
             var command = new RegisterCommand(request);
             var result = await _registerHandler.Handle(command);

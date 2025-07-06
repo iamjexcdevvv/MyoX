@@ -31,9 +31,7 @@ namespace MyoX.Application.Features.Authentication.Register
                 return Result.Failure(new Error("Request", "Invalid request"));
             }
 
-            var user = _userRepo.GetUserByEmailAsync(command.request.Email);
-
-            if (user is not null)
+            if (await _userRepo.IsUserFoundAsync(command.request.Email))
             {
                 return Result.Failure(UserAuthError.EmailAlreadyExists);
             }
